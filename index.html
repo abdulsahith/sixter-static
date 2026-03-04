@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sixter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: #0a0b1e;
+            color: #e4e7eb;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1e2a5e 0%, #0a0b1e 50%);
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float-orb 20s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: -150px;
+            left: -150px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            bottom: -100px;
+            right: -100px;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            top: 50%;
+            right: 10%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.9); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(10, 11, 30, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo{
+            width: 100px;
+            height: 40px;
+
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(228, 231, 235, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #e4e7eb;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            padding: 150px 60px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(228, 231, 235, 0.8);
+            margin-bottom: 30px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(228, 231, 235, 0.6);
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            color: rgba(228, 231, 235, 0.9);
+            padding: 18px 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            gap: 12px;
+        }
+
+        /* Isometric Illustration */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .isometric-stack {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+        }
+
+        .iso-layer {
+            position: absolute;
+            width: 280px;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            border-radius: 20px;
+            left: 50%;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .iso-layer:nth-child(1) {
+            top: 50px;
+            transform: translateX(-50%) rotateX(20deg) rotateY(-20deg);
+            animation-delay: 0s;
+            background: linear-gradient(135deg, rgba(255, 138, 101, 0.15) 0%, rgba(255, 184, 108, 0.15) 100%);
+            border-color: rgba(255, 138, 101, 0.3);
+        }
+
+        .iso-layer:nth-child(2) {
+            top: 150px;
+            transform: translateX(-50%) rotateX(20deg) rotateY(-20deg);
+            animation-delay: 0.5s;
+        }
+
+        .iso-layer:nth-child(3) {
+            top: 250px;
+            transform: translateX(-50%) rotateX(20deg) rotateY(-20deg);
+            animation-delay: 1s;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(52, 211, 153, 0.15) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .iso-layer:nth-child(4) {
+            top: 350px;
+            transform: translateX(-50%) rotateX(20deg) rotateY(-20deg);
+            animation-delay: 1.5s;
+        }
+
+        .iso-layer:nth-child(5) {
+            top: 450px;
+            transform: translateX(-50%) rotateX(20deg) rotateY(-20deg);
+            animation-delay: 2s;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
+            border-color: rgba(147, 51, 234, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateX(-50%) rotateX(20deg) rotateY(-20deg) translateY(0px);
+            }
+            50% {
+                transform: translateX(-50%) rotateX(20deg) rotateY(-20deg) translateY(-20px);
+            }
+        }
+
+        .layer-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            opacity: 0.7;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .connection-line {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(180deg, transparent, rgba(102, 126, 234, 0.4), transparent);
+            left: 50%;
+            transform: translateX(-50%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .connection-line:nth-child(6) { top: 130px; }
+        .connection-line:nth-child(7) { top: 230px; }
+        .connection-line:nth-child(8) { top: 330px; }
+        .connection-line:nth-child(9) { top: 430px; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Usage Section */
+        .usage-section {
+            position: relative;
+            z-index: 1;
+            padding: 100px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .usage-container {
+            text-align: center;
+        }
+
+        .usage-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .usage-description {
+            font-size: 1.2rem;
+            color: rgba(228, 231, 235, 0.7);
+            margin-bottom: 50px;
+        }
+
+        .code-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 50px;
+            max-width: 800px;
+            text-align: left;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(102, 126, 234, 0.08);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.15);
+        }
+
+        .code-lang {
+            font-size: 0.85rem;
+            color: rgba(228, 231, 235, 0.6);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-btn {
+            background: rgba(102, 126, 234, 0.15);
+            color: #a5b4fc;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(102, 126, 234, 0.25);
+            border-color: rgba(102, 126, 234, 0.5);
+            color: #c7d2fe;
+            transform: translateY(-1px);
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 24px;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'SF Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 1rem;
+            color: #a5d6ff;
+            line-height: 1.8;
+        }
+
+        .usage-example {
+            background: rgba(102, 126, 234, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.15);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .example-label {
+            font-size: 0.9rem;
+            color: rgba(228, 231, 235, 0.6);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .usage-example .code-block {
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .example-note {
+            font-size: 1.05rem;
+            color: rgba(228, 231, 235, 0.7);
+            line-height: 1.8;
+        }
+
+        .example-note strong {
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 60px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 11, 30, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            color: rgba(228, 231, 235, 0.5);
+            font-size: 0.95rem;
+        }
+
+        .creator {
+            margin-top: 12px;
+            font-style: italic;
+            color: rgba(228, 231, 235, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+                padding: 140px 40px 60px;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                margin-top: 60px;
+            }
+
+            nav {
+                padding: 20px 40px;
+            }
+
+            .nav-links {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .isometric-stack {
+                transform: scale(0.8);
+            }
+
+            .usage-section {
+                padding: 80px 30px;
+            }
+
+            .usage-title {
+                font-size: 2rem;
+            }
+
+            .usage-description {
+                font-size: 1rem;
+            }
+
+            .code-block {
+                max-width: 100%;
+            }
+
+            .code-block code {
+                font-size: 0.85rem;
+            }
+
+            nav {
+                padding: 16px 24px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection Colors */
+        ::selection {
+            background: rgba(102, 126, 234, 0.3);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <!-- <div class="logo-text">Sixter Tunnel</div> -->
+         <img class="logo" src="sixter-logo.png" alt="sixter">
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#docs">Docs</a></li>
+            <li><a href="#about">About</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Secure Tunnel Network</h1>
+            <p class="hero-subtitle">High performance and High Availability for apps and APIs</p>
+            <p class="hero-description">
+                Your app is built, and now poised to take over the world. How do you ensure high performance, availability, and handle traffic seamlessly to a global audience? That's where Sixter's Secure Tunnel comes in. Our out-of-the-box, zero configuration tunnel service takes care of high performance and high availability for your applications, APIs, and services, wherever your origin host service is.
+            </p>
+            <div class="cta-buttons">
+                <a href="SixterSetup.exe" download class="btn-primary">
+                    <span>⬇</span>
+                    Download for free
+                </a>
+                <a href="tech.html" class="btn-secondary" >
+                    Technical documentation
+                    <span>→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="isometric-stack">
+                <div class="iso-layer">
+                    <div class="layer-icon">🔒</div>
+                </div>
+                <div class="iso-layer">
+                    <div class="layer-icon">⚡</div>
+                </div>
+                <div class="iso-layer">
+                    <div class="layer-icon">🌐</div>
+                </div>
+                <div class="iso-layer">
+                    <div class="layer-icon">🔄</div>
+                </div>
+                <div class="iso-layer">
+                    <div class="layer-icon">💾</div>
+                </div>
+                <div class="connection-line"></div>
+                <div class="connection-line"></div>
+                <div class="connection-line"></div>
+                <div class="connection-line"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use Section -->
+    <section class="usage-section">
+        <div class="usage-container">
+            <h2 class="usage-title">Get Started in Seconds</h2>
+            <p class="usage-description">After downloading and installing Sixter, open your terminal or command prompt and run:</p>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Terminal</span>
+                    <button class="copy-btn" onclick="copyCode()">
+                        <span id="copy-text">Copy</span>
+                    </button>
+                </div>
+                <pre><code id="code-content">sixter tunnel --subdomain &lt;your subdomain name&gt; --port &lt;your project port&gt;</code></pre>
+            </div>
+
+            <div class="usage-example">
+                <p class="example-label">Example</p>
+                <div class="code-block">
+                    <pre><code>sixter tunnel --subdomain myapp --port 3000</code></pre>
+                </div>
+                <p class="example-note">This will create a secure tunnel at <strong>myapp.sixter.in</strong> pointing to your local port 3000</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Sixter. All rights reserved.</p>
+            <p class="creator">Created by Abdul Sahith</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode() {
+            const code = document.getElementById('code-content').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const copyText = document.getElementById('copy-text');
+                copyText.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyText.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
